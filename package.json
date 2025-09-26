@@ -1,5 +1,5 @@
 {
-  "name": "cogestione-easy",
+  "name": "PaCo Access",
   "version": "1.0.0",
   "description": "Piattaforma per la gestione della cogestione scolastica",
   "main": "server.js",
@@ -17,4 +17,5 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
+
 }
