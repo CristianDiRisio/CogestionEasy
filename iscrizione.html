@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Cogestione</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #b81414;
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      margin:auto;
+      max-width: 1200px;
+    }
+
+    /* Main content */
+    .main {
+      color: #fff;
+      max-width: 1200px;
+      margin: auto;
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        border-radius: 20px;
+        padding: 40px 30px 30px 30px;
+        margin-top: 40px;
+    }
+
+    .main h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .main h1 span {
+      color: #ffeb3b;
+    }
+
+      .main h2 {
+        font-size: 1.5rem;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: #ffe0e0;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        font-weight: 600;
+        border-left: 5px solid #ffeb3b;
+        padding-left: 12px;
+      }
+
+    @media(max-width:768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .navbar .menu {
+        flex-wrap: wrap;
+      }
+        .main {
+          padding: 120px 10px 10px;
+        }
+    }
+
+    .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: relative;
+}
+
+/* Style the navigation menu */
+.topnav {
+      position: relative;
+      overflow: hidden;
+      top: 10px; /* Margine dall'alto */
+      left: 50%; /* Centra la navbar orizzontalmente */
+      transform: translateX(-50%); /* Centra la navbar */
+      width: 90%; /* Ridotta la larghezza */
+      max-width: 1200px; /* Imposta una larghezza massima */
+      z-index: 1000;
+      border-radius: 15px; /* Arrotonda i bordi */
+      background-color: white;
+}
+
+/* Hide the links inside the navigation menu (except for logo/home) */
+.topnav #myLinks {
+  display: none;
+}
+
+/* Style navigation menu links */
+.topnav a {
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+}
+
+/* Style the hamburger menu */
+.topnav a.icon {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Add a grey background color on mouse-over */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the active link (or home/logo) */
+.active {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+    .Giorni {
+      width: 100%;
+      color: #333;
+      background: rgba(255,255,255,0.95);
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border-collapse: collapse;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .Giorni th, .Giorni td {
+      padding: 14px 10px;
+      text-align: left;
+    }
+    .Giorni th {
+      background: #b81414;
+      color: #fff;
+      font-weight: 700;
+      border-bottom: 2px solid #ffeb3b;
+    }
+    .Giorni tr:nth-child(even) {
+      background: #ffe0e0;
+    }
+    .Giorni tr:nth-child(odd) {
+      background: #fff6f6;
+    }
+    .Giorni p {
+      margin: 0;
+      font-weight: 500;
+      color: #b81414;
+    }
+    .Giorni select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #b81414;
+      font-size: 1rem;
+      background: #fff;
+      color: #b81414;
+      transition: border 0.2s;
+    }
+    .Giorni select:focus {
+      border: 2px solid #ffeb3b;
+      outline: none;
+    }
+
+    #iscrizioneForm {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    button[type="submit"] {
+      display: block;
+      margin: 30px auto 0 auto;
+      padding: 12px 32px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(90deg, #b81414 60%, #ffeb3b 100%);
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #ffeb3b 0%, #b81414 100%);
+      color: #b81414;
+      transform: scale(1.05);
+    }
+</style>
+
+<script>
+  // Recupero informazioni utente dal localStorage
+  window.onload = function() {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo && userInfo.name) {
+      document.getElementById("username").textContent = userInfo.name;
+      document.getElementById("welcomeName").textContent = userInfo.name;
+      if (userInfo.picture) {
+        document.getElementById("userpic").src = userInfo.picture;
+      }
+    } else {
+      // Se non c'è login, rimando alla pagina di accesso
+      window.location.href = "index.html";
+    }
+  };
+
+  // Funzione logout
+  function logout() {
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("authToken");
+    window.location.href = "index.html";
+  }
+
+  function mostraFraseRandom() {
+    // Array di frasi predefinite
+    const frasi = [
+      "Dove sei stato fin'ora?",
+      "Benvenuto nel nostro sito!",
+      "Oggi è una giornata fantastica!",
+      "Hai già scoperto tutte le funzionalità?",
+      "Speriamo che ti piaccia!"
+    ];
+
+    // Seleziona una frase casuale
+    const fraseCasuale = frasi[Math.floor(Math.random() * frasi.length)];
+
+    // Mostra la frase nella pagina
+    document.getElementById("frase-random").innerText = fraseCasuale;
+  }
+
+  // Mostra una frase casuale al caricamento della pagina
+  window.onload = mostraFraseRandom;
+
+  function HamburgherMenu() {
+  var x = document.getElementById("myLinks");
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+}
+</script>
+</head>
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="topnav">
+    <a href="PaginaPrincipale.html" class="active">PaCo-Access</a>
+    <div id="myLinks">
+      <a href="#">Iscrizione</a>
+      <a href="informazioni.html">Informazioni</a>
+      <a href="#">QR Code</a>
+      <a href="#">Assistenza</a>
+      <a href="#">Sicurezza</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="HamburgherMenu()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+  <div class="main">
+    <h1>Iscrizione alle attività</h1>
+    <form id="iscrizioneForm">
+      <h2>6 Giugno</h2>
+      <table class="Giorni">
+        <tr><th>Orario</th><th>Attività</th></tr>
+        <tr><td>08:00 - 08:30</td><td><p>Appello</p>
+        <tr><td>08:30 - 09:30</td><td><select name="attivita_6_2">{options}</select></td></tr>
+        <tr><td>09:30 - 10:30</td><td><select name="attivita_6_3">{options}</select></td></tr>
+        <tr><td>10:30 - 11:30</td><td><select name="attivita_6_4">{options}</select></td></tr>
+        <tr><td>11:30 - 12:30</td><td><select name="attivita_6_5">{options}</select></td></tr>
+        <tr><td>12:30 - 13:00</td><td><p>Contro Appello</p></td></tr>
+      </table>
+      <h2>7 Giugno</h2>
+      <table class="Giorni">
+        <tr><th>Orario</th><th>Attività</th></tr>
+        <tr><td>08:00 - 08:30</td><td><p>Appello</p>
+        <tr><td>08:30 - 09:30</td><td><select name="attivita_7_2">{options}</select></td></tr>
+        <tr><td>09:30 - 10:30</td><td><select name="attivita_7_3">{options}</select></td></tr>
+        <tr><td>10:30 - 11:30</td><td><select name="attivita_7_4">{options}</select></td></tr>
+        <tr><td>11:30 - 12:00</td><td><p>Contro Appello</p>
+      </table>
+      <button type="submit">Invia Iscrizione</button>
+    </form>
+  </div>
+
+  <script>
+    // Opzioni attività
+    const attivita = [
+        "prova",
+    ];
+    // Inserisci le opzioni nei select
+    document.addEventListener("DOMContentLoaded", function() {
+      const selects = document.querySelectorAll("select");
+      selects.forEach(sel => {
+        attivita.forEach(opt => {
+          const option = document.createElement("option");
+          option.value = opt;
+          option.textContent = opt;
+          sel.appendChild(option);
+        });
+      });
+    });
+    // Gestione invio
+    document.getElementById("iscrizioneForm").onsubmit = function(e) {
+      e.preventDefault();
+      const dati = {};
+      const selects = document.querySelectorAll("select");
+      selects.forEach(sel => {
+        dati[sel.name] = sel.value;
+      });
+      alert("Iscrizione inviata!\n" + JSON.stringify(dati, null, 2));
+    };
+  </script>
+</body>
+</html>
